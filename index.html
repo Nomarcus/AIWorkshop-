@@ -1,263 +1,511 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Workshop Navigator</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nordic Operations – AI Workshop</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js" integrity="sha512-4Nhwf3ymUyDRXscEkad3UTyJ/Lo1VIZcGJ2Ti8YnzvOmm68hqYxJIRulSZl3WwccWNXQP7IqV9P3yb8+axi3Lw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js" integrity="sha512-MOCpqoRoisCTwJ8vQQiciZv0qcpROCidek3GTFS6KTk2+y7munJIlKCVkFCYY+p3ErYFXCjmFjnfTTRSC1OHWQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .animate-gradient {
+            background: linear-gradient(270deg, #0f172a, #1e1b4b, #581c87, #0f172a);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+
+        .slide-content {
+            padding-bottom: 180px;
+            padding-top: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: calc(100vh - 180px);
+        }
+
+        .comparison-card {
+            transition: all 0.3s ease;
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(168, 85, 247, 0.3);
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .nav-dot {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-dot:hover {
+            transform: scale(1.2);
+        }
+
+        .nav-arrow {
+            transition: all 0.3s ease;
+        }
+
+        .nav-arrow:hover {
+            transform: scale(1.05);
+        }
+
+        .icon-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .progress-bar-fill {
+            transition: width 0.3s ease;
+        }
+
+        .nav-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+    </style>
 </head>
-<body>
-  <header class="site-header">
-    <div class="logo">AI Workshop Navigator</div>
-    <nav class="main-nav" aria-label="Huvudnavigering">
-      <a href="#intro">AI på 2 minuter</a>
-      <a href="#aivbi">AI vs BI</a>
-      <a href="#upplagg">Workshopupplägg</a>
-      <a href="#spelregler">Spelregler</a>
-      <a href="#resurser">Resurser</a>
-    </nav>
-  </header>
+<body class="animate-gradient min-h-screen text-white">
+    <div id="root"></div>
 
-  <main>
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-content">
-        <h1 id="hero-title">Kickstarta era AI-workshops</h1>
-        <p>
-          Använd den här sidan som en gemensam startpunkt för att introducera AI, tydliggöra skillnaden mot BI
-          och få alla att bidra med idéer om hur vi kan förbättra våra processer och spara pengar.
-        </p>
-        <div class="cta-buttons">
-          <a class="button primary" href="#spelregler">Gå direkt till spelreglerna</a>
-          <a class="button secondary" href="#whiteboard">Förbered whiteboardövningen</a>
-        </div>
-      </div>
-      <div class="hero-card" role="presentation">
-        <h2>Workshopens mål</h2>
-        <ul>
-          <li>Skapa en gemensam förståelse för vad AI är (på riktigt).</li>
-          <li>Ringfence vad BI gör och när det räcker.</li>
-          <li>Samla konkreta AI-idéer som stärker processer och minskar kostnader.</li>
-        </ul>
-      </div>
-    </section>
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useCallback } = React;
 
-    <section id="intro" class="section" aria-labelledby="intro-title">
-      <div class="section-header">
-        <h2 id="intro-title">AI på 2 minuter</h2>
-        <p class="section-subtitle">En ultrakort intro att presentera innan teamen sätter igång.</p>
-      </div>
-      <div class="cards-grid">
-        <article class="info-card">
-          <h3>Vad är AI?</h3>
-          <p>
-            AI är tekniker som kan uppfatta, resonera och agera med data. Det handlar om att skapa modeller som kan lära
-            sig mönster och förbättras över tid – ofta snabbare än vi människor hinner.
-          </p>
-        </article>
-        <article class="info-card">
-          <h3>Varför nu?</h3>
-          <p>
-            Kostnaden för datakraft har minskat, modeller finns förtränade och företag kan därför fokusera på verkliga
-            problem istället för att bygga allt från grunden. Det gör AI tillgängligt även för små team.
-          </p>
-        </article>
-        <article class="info-card">
-          <h3>Vad AI inte är</h3>
-          <p>
-            Det är inte magi, inte en silverkula. Utan rätt data, tydliga problem och ansvarigt användande skapar det
-            inga värden.
-          </p>
-        </article>
-      </div>
-    </section>
+        const slides = [
+            { id: 0, title: 'Vad är AI?', type: 'definition' },
+            { id: 1, title: 'AI vs BI', type: 'comparison' },
+            { id: 2, title: 'Spelregler', type: 'rules' },
+            { id: 3, title: 'Workshop: Vad kan vi lösa med AI?', type: 'workshop' }
+        ];
 
-    <section id="aivbi" class="section section-alt" aria-labelledby="aivbi-title">
-      <div class="section-header">
-        <h2 id="aivbi-title">Skillnaden mellan AI och BI</h2>
-        <p class="section-subtitle">Förklara skillnaderna snabbt och visuellt – så att teamen har samma utgångspunkt.</p>
-      </div>
-      <div class="comparison">
-        <div class="comparison-column">
-          <h3>Business Intelligence (BI)</h3>
-          <ul>
-            <li>Fokuserar på att beskriva och visualisera vad som har hänt.</li>
-            <li>Kräver strukturerad, historisk data och tydliga KPI:er.</li>
-            <li>Ger beslutsstöd genom dashboards, rapporter och uppföljning.</li>
-            <li>Är deterministisk: samma fråga ger samma svar.</li>
-          </ul>
-        </div>
-        <div class="comparison-column">
-          <h3>Artificiell Intelligens (AI)</h3>
-          <ul>
-            <li>Förutser, optimerar eller automatiserar nästa steg.</li>
-            <li>Kan använda både strukturerad och ostrukturerad data.</li>
-            <li>Ger rekommendationer, genererar innehåll eller agerar autonomt.</li>
-            <li>Är probabilistisk: utfallet bygger på sannolikheter.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="callout">
-        <h3>När behövs AI?</h3>
-        <p>
-          När vi vill förutse framtida utfall, hantera komplexitet eller frigöra tid genom automatisering. Om målet är att
-          förstå nuläget räcker ofta BI – men så fort vi vill påverka framtiden är AI rätt verktyg.
-        </p>
-      </div>
-    </section>
+        function PresentationApp() {
+            const [currentSlide, setCurrentSlide] = useState(0);
+            const totalSlides = slides.length;
 
-    <section id="upplagg" class="section" aria-labelledby="upplagg-title">
-      <div class="section-header">
-        <h2 id="upplagg-title">Workshopupplägg</h2>
-        <p class="section-subtitle">Håll tempot uppe med tydliga block. Anpassa tiderna efter teamets behov.</p>
-      </div>
-      <div class="timeline" role="list">
-        <div class="timeline-item" role="listitem">
-          <span class="timeline-badge">1</span>
-          <div>
-            <h3>Start: 10 minuter</h3>
-            <p>Presentera AI-kortet och skillnaden mot BI. Klargör syfte och vad som förväntas av deltagarna.</p>
-          </div>
-        </div>
-        <div class="timeline-item" role="listitem">
-          <span class="timeline-badge">2</span>
-          <div>
-            <h3>Idégenerering: 20 minuter</h3>
-            <p>Deltagarna arbetar i smågrupper vid whiteboarden och skriver upp problem, möjligheter och data som behövs.</p>
-          </div>
-        </div>
-        <div class="timeline-item" role="listitem">
-          <span class="timeline-badge">3</span>
-          <div>
-            <h3>Prioritering: 15 minuter</h3>
-            <p>Grupperna klustrar idéer, väljer topp 3 och motiverar med affärsnytta samt förväntad besparing.</p>
-          </div>
-        </div>
-        <div class="timeline-item" role="listitem">
-          <span class="timeline-badge">4</span>
-          <div>
-            <h3>Återkoppling: 10 minuter</h3>
-            <p>Varje grupp pitchar sina idéer. Samla in foton eller anteckningar för uppföljning.</p>
-          </div>
-        </div>
-      </div>
-      <div class="tip-box">
-        <h3>Facilitator-tips</h3>
-        <ul>
-          <li>Använd en timer som alla kan se.</li>
-          <li>Blanda roller i grupperna: verksamhet, teknik, data, kund.</li>
-          <li>Uppmuntra deltagare att tänka på både kostnadsbesparingar och värdeskapande.</li>
-        </ul>
-      </div>
-    </section>
+            const nextSlide = useCallback(() => {
+                setCurrentSlide((prev) => Math.min(prev + 1, totalSlides - 1));
+            }, [totalSlides]);
 
-    <section id="spelregler" class="section section-alt" aria-labelledby="spelregler-title">
-      <div class="section-header">
-        <h2 id="spelregler-title">Spelregler för whiteboardövningen</h2>
-        <p class="section-subtitle">Förklara dessa tydligt innan ni går ut till whiteboarden.</p>
-      </div>
-      <div class="rules">
-        <ol id="rule-list">
-          <li>Alla idéer skrivs upp i full mening – inga kryptiska förkortningar.</li>
-          <li>Varje lapp beskriver ett problem eller en möjlighet, inte en lösning.</li>
-          <li>Fokusera på processer där tid eller pengar förloras idag.</li>
-          <li>Notera vilken data som krävs för att möjliggöra AI-lösningen.</li>
-          <li>Märk upp idéer som kräver samarbete med andra team.</li>
-          <li>Skatta snabbt potentialen: Hög, Medel eller Låg påverkan.</li>
-          <li>Fotografera whiteboarden innan ni lämnar rummet.</li>
-        </ol>
-        <button class="button primary" data-copy-target="rule-list">Kopiera spelregler</button>
-      </div>
-      <div class="checklist" aria-label="Snabbchecklista">
-        <h3>Snabbchecklista för facilitators</h3>
-        <ul>
-          <li>Testa pennor &amp; post-its.</li>
-          <li>Förbered mall för idésammanställning.</li>
-          <li>Utse en fotograf per grupp.</li>
-        </ul>
-      </div>
-    </section>
+            const prevSlide = useCallback(() => {
+                setCurrentSlide((prev) => Math.max(prev - 1, 0));
+            }, []);
 
-    <section id="whiteboard" class="section" aria-labelledby="whiteboard-title">
-      <div class="section-header">
-        <h2 id="whiteboard-title">Stöd för whiteboard-sessionen</h2>
-        <p class="section-subtitle">Ge grupperna tydliga stödfrågor för att fånga både kortsiktiga och långsiktiga idéer.</p>
-      </div>
-      <div class="accordion" role="tablist">
-        <article class="accordion-item" aria-expanded="false">
-          <button class="accordion-trigger" aria-controls="panel-problem" aria-expanded="false">
-            Problem att lösa
-          </button>
-          <div id="panel-problem" class="accordion-panel" role="region" aria-hidden="true">
-            <ul>
-              <li>Vilka moment tar längst tid i processen idag?</li>
-              <li>Var uppstår fel, dubbelarbete eller väntetider?</li>
-              <li>Vilka beslut skulle bli bättre med mer data eller analys?</li>
-            </ul>
-          </div>
-        </article>
-        <article class="accordion-item" aria-expanded="false">
-          <button class="accordion-trigger" aria-controls="panel-data" aria-expanded="false">
-            Data att samla in
-          </button>
-          <div id="panel-data" class="accordion-panel" role="region" aria-hidden="true">
-            <ul>
-              <li>Vilken data har vi redan i våra system?</li>
-              <li>Vad saknas för att träna eller använda en AI-modell?</li>
-              <li>Finns det ostrukturerad data (text, bilder, ljud) som skulle ge värde?</li>
-            </ul>
-          </div>
-        </article>
-        <article class="accordion-item" aria-expanded="false">
-          <button class="accordion-trigger" aria-controls="panel-effekt" aria-expanded="false">
-            Effekt och mått
-          </button>
-          <div id="panel-effekt" class="accordion-panel" role="region" aria-hidden="true">
-            <ul>
-              <li>Hur mycket tid eller pengar kan sparas?</li>
-              <li>Vilka risker minskar vi om vi lyckas?</li>
-              <li>Hur mäter vi framgång första, tredje och tolfte månaden?</li>
-            </ul>
-          </div>
-        </article>
-      </div>
-      <div class="note">
-        <strong>Tips:</strong> Låt varje grupp välja en talesperson som summerar svaren på dessa frågor när ni återsamlas.
-      </div>
-    </section>
+            const goToSlide = useCallback((index) => {
+                setCurrentSlide(() => Math.max(0, Math.min(index, totalSlides - 1)));
+            }, [totalSlides]);
 
-    <section id="resurser" class="section section-alt" aria-labelledby="resurser-title">
-      <div class="section-header">
-        <h2 id="resurser-title">Resurser &amp; uppföljning</h2>
-        <p class="section-subtitle">Säkerställ att idéerna tas vidare efter sessionen.</p>
-      </div>
-      <div class="resource-grid">
-        <article class="resource-card">
-          <h3>Sammanställning av idéer</h3>
-          <p>Använd en delad mall i ert projektsystem (t.ex. Confluence, Notion eller Teams) där varje idé loggas med ägare och nästa steg.</p>
-        </article>
-        <article class="resource-card">
-          <h3>Fördjupningsläsning</h3>
-          <ul>
-            <li><a href="https://www.ai.se/" target="_blank" rel="noopener">AI Sweden – nationella resurser</a></li>
-            <li><a href="https://openai.com/blog" target="_blank" rel="noopener">OpenAI Blog – trender och exempel</a></li>
-            <li><a href="https://towardsdatascience.com/" target="_blank" rel="noopener">Towards Data Science – praktiska guider</a></li>
-          </ul>
-        </article>
-        <article class="resource-card">
-          <h3>Fortsatt arbete</h3>
-          <p>Utse en liten arbetsgrupp som prioriterar idéerna, uppskattar ROI och tar fram en experimentplan med tydliga milstolpar.</p>
-        </article>
-      </div>
-    </section>
-  </main>
+            useEffect(() => {
+                const handleKeyPress = (e) => {
+                    if (['ArrowRight', ' '].includes(e.key)) {
+                        e.preventDefault();
+                        nextSlide();
+                    } else if (['ArrowLeft', 'ArrowUp'].includes(e.key)) {
+                        e.preventDefault();
+                        prevSlide();
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        nextSlide();
+                    }
+                };
 
-  <footer class="site-footer">
-    <p>Skapad för att hjälpa team tänka smartare om AI. Justera fritt för varje workshop.</p>
-  </footer>
+                window.addEventListener('keydown', handleKeyPress);
+                return () => window.removeEventListener('keydown', handleKeyPress);
+            }, [nextSlide, prevSlide]);
 
-  <script src="script.js"></script>
+            const renderedSlide = useMemo(() => {
+                switch (slides[currentSlide].type) {
+                    case 'definition':
+                        return <DefinitionSlide />;
+                    case 'comparison':
+                        return <ComparisonSlide />;
+                    case 'rules':
+                        return <RulesSlide />;
+                    case 'workshop':
+                        return <WorkshopSlide />;
+                    default:
+                        return null;
+                }
+            }, [currentSlide]);
+
+            return (
+                <div className="min-h-screen flex flex-col">
+                    <BrandHeader current={currentSlide + 1} total={totalSlides} />
+                    <main className="flex-1">{renderedSlide}</main>
+                    <NavigationFooter
+                        current={currentSlide}
+                        total={totalSlides}
+                        onPrev={prevSlide}
+                        onNext={nextSlide}
+                        onSelect={goToSlide}
+                    />
+                </div>
+            );
+        }
+
+        const BrandHeader = ({ current, total }) => (
+            <header className="fixed top-0 left-0 right-0 p-6 z-50">
+                <div className="max-w-7xl mx-auto flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <p className="uppercase tracking-widest text-xs text-white/60">Nordic Operations</p>
+                        <h1 className="text-2xl font-bold text-white">AI Förbättringsworkshop</h1>
+                    </div>
+                    <div className="glass-effect rounded-xl px-4 py-2 text-sm text-white/70">
+                        Slide {current} av {total}
+                    </div>
+                </div>
+            </header>
+        );
+
+        function DefinitionSlide() {
+            return (
+                <section className="slide-content animate-fade-in px-8">
+                    <ParticleField />
+                    <div className="max-w-6xl mx-auto text-center relative" style={{ zIndex: 10 }}>
+                        <div className="text-8xl mb-8 icon-float" aria-hidden="true">🤖</div>
+                        <h2 className="text-6xl md:text-7xl font-black mb-10 leading-tight">
+                            Vad är
+                            <span className="block bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+                                artificiell intelligens?
+                            </span>
+                        </h2>
+                        <div className="glass-effect rounded-3xl p-10 mb-8">
+                            <p className="text-2xl md:text-3xl text-white/90 leading-relaxed font-light">
+                                AI-system kan <span className="font-bold text-purple-300">lära sig mönster</span>,
+                                <span className="font-bold text-pink-300"> tolka komplex information</span> och
+                                <span className="font-bold text-blue-300"> agera automatiskt</span> – utan att vi
+                                förprogrammerar varje steg.
+                            </p>
+                        </div>
+                        <div className="grid md:grid-cols-3 gap-6 animate-slide-in" style={{ animationDelay: '0.25s' }}>
+                            <DefinitionCard icon="🧠" title="Lär sig" text="Modeller förbättras när vi matar dem med mer data – precis som en kollega som blir bättre med erfarenhet." />
+                            <DefinitionCard icon="💬" title="Förstår" text="Språk, bilder och sensordata kan analyseras i realtid för att fånga det människor missar." />
+                            <DefinitionCard icon="⚡" title="Agerar" text="AI kan trigga åtgärder, rekommendera nästa steg eller helt automatisera ett arbetsflöde." />
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        const DefinitionCard = ({ icon, title, text }) => (
+            <article className="glass-effect rounded-2xl p-8 hover:bg-white/10 transition-all text-left">
+                <div className="text-5xl mb-4" aria-hidden="true">{icon}</div>
+                <h3 className="text-2xl font-bold mb-3">{title}</h3>
+                <p className="text-white/70 text-lg">{text}</p>
+            </article>
+        );
+
+        function ComparisonSlide() {
+            return (
+                <section className="slide-content animate-fade-in px-8">
+                    <div className="max-w-7xl mx-auto relative" style={{ zIndex: 10 }}>
+                        <header className="text-center mb-12">
+                            <h2 className="text-5xl md:text-6xl font-black mb-4">AI vs BI</h2>
+                            <p className="text-2xl text-white/70">Förklara skillnaden på sekunder – så att alla pratar om samma sak.</p>
+                        </header>
+                        <div className="grid md:grid-cols-2 gap-8">
+                            <ComparisonColumn
+                                title="Business Intelligence"
+                                subtitle="Vad hände?"
+                                icon="📊"
+                                points={[
+                                    'Visualiserar historisk data med rapporter och dashboards.',
+                                    'Förutsätter tydligt definierade frågor och KPI:er.',
+                                    'Människor tolkar insikterna och fattar besluten.',
+                                    'Är reaktivt och svarar på det som redan hänt.'
+                                ]}
+                            />
+                            <ComparisonColumn
+                                title="Artificiell Intelligens"
+                                subtitle="Vad händer nu?"
+                                icon="🤖"
+                                accent
+                                points={[
+                                    'Predikterar framtida utfall och flaggar risker innan de inträffar.',
+                                    'Hanterar både strukturerad och ostrukturerad data.',
+                                    'Ger rekommendationer, genererar innehåll eller agerar autonomt.',
+                                    'Är proaktivt och förbättrar processer i realtid.'
+                                ]}
+                            />
+                        </div>
+                        <footer className="mt-10 glass-effect rounded-2xl p-8 text-center">
+                            <p className="text-2xl text-white/80">
+                                <span className="font-bold text-purple-300">BI hjälper oss förstå nuläget</span>
+                                <span className="mx-4 text-white/40">•</span>
+                                <span className="font-bold text-green-300">AI hjälper oss förändra framtiden</span>
+                            </p>
+                        </footer>
+                    </div>
+                </section>
+            );
+        }
+
+        const ComparisonColumn = ({ title, subtitle, icon, points, accent }) => (
+            <article className={`comparison-card glass-effect rounded-3xl p-10 ${accent ? 'border-2 border-purple-500/30' : ''}`}>
+                <div className="text-center mb-8">
+                    <div className="text-6xl mb-4" aria-hidden="true">{icon}</div>
+                    <h3 className="text-3xl font-black mb-2">{title}</h3>
+                    <p className="text-purple-200 text-lg font-semibold">{subtitle}</p>
+                </div>
+                <ul className="space-y-5 text-left">
+                    {points.map((point, index) => (
+                        <li key={index} className="bg-white/5 rounded-2xl p-5 text-white/80">
+                            {point}
+                        </li>
+                    ))}
+                </ul>
+            </article>
+        );
+
+        function RulesSlide() {
+            const rules = [
+                { icon: '🙋‍♀️', title: 'Alla röster räknas', text: 'Bjud in både operativa och strategiska perspektiv. Skriv ner varje idé innan den diskuteras.' },
+                { icon: '⏱️', title: 'Tempo före perfektion', text: 'Vi producerar många idéer först – utvärdering kommer senare. Max 1 minut per talare under delningar.' },
+                { icon: '🎯', title: 'Problem först', text: 'Beskriv vilket problem vi löser och vem som påverkas innan vi pratar teknik eller lösningar.' },
+                { icon: '🛡️', title: 'Ansvar och etik', text: 'Tänk på dataåtkomst, kvalitet, integritet och påverkan på människor i varje förslag.' }
+            ];
+
+            return (
+                <section className="slide-content animate-fade-in px-8">
+                    <div className="max-w-5xl mx-auto relative" style={{ zIndex: 10 }}>
+                        <header className="text-center mb-12">
+                            <div className="text-7xl mb-6 icon-float" aria-hidden="true">📋</div>
+                            <h2 className="text-5xl md:text-6xl font-black mb-4">Spelregler för workshopen</h2>
+                            <p className="text-2xl text-white/70">Visa den här sliden innan ni flyttar till whiteboarden.</p>
+                        </header>
+                        <div className="grid md:grid-cols-2 gap-6">
+                            {rules.map((rule) => (
+                                <article key={rule.title} className="glass-effect rounded-3xl p-8 hover:bg-white/10 transition-all">
+                                    <div className="text-4xl mb-3" aria-hidden="true">{rule.icon}</div>
+                                    <h3 className="text-2xl font-bold mb-2">{rule.title}</h3>
+                                    <p className="text-white/70 text-lg">{rule.text}</p>
+                                </article>
+                            ))}
+                        </div>
+                        <div className="glass-effect rounded-2xl p-6 mt-8 text-center">
+                            <p className="text-xl text-white/80">Avsluta med att be alla ta med sina idéer till whiteboarden – digital eller fysisk.</p>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        function WorkshopSlide() {
+            const steps = [
+                {
+                    step: '1',
+                    title: 'Individuell idégenerering',
+                    description: 'Skriv ner så många problem eller möjligheter du kan se i vardagen.',
+                    duration: '10 min',
+                    focus: 'Fokus: Vart läcker tid eller pengar idag?'
+                },
+                {
+                    step: '2',
+                    title: 'Smågruppsdiskussion',
+                    description: 'Grupper om 3–4 personer väljer ut toppidéerna och kartlägger varför just de gör skillnad.',
+                    duration: '15 min',
+                    focus: 'Fokus: Effekt, kostnadsbesparing, kundupplevelse.'
+                },
+                {
+                    step: '3',
+                    title: 'Gemensam sortering',
+                    description: 'Placera idéerna på whiteboarden under kategorier: Kund, Effektivitet, Innovation, Risk.',
+                    duration: '20 min',
+                    focus: 'Fokus: Var ser vi snabbast värde?'
+                },
+                {
+                    step: '4',
+                    title: 'Prioritering & nästa steg',
+                    description: 'Röstning med tre klisterpunkter var. Dokumentera ansvarig, tidslinje och mätetal.',
+                    duration: '15 min',
+                    focus: 'Fokus: Top 3 initiativ att undersöka vidare.'
+                }
+            ];
+
+            return (
+                <section className="slide-content animate-fade-in px-8">
+                    <div className="max-w-6xl mx-auto relative" style={{ zIndex: 10 }}>
+                        <header className="text-center mb-12">
+                            <div className="text-7xl mb-6 icon-float" aria-hidden="true">🧭</div>
+                            <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
+                                Vad kan vi lösa
+                                <span className="block bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+                                    med AI?
+                                </span>
+                            </h2>
+                            <p className="text-2xl text-white/70">Följ agendan och kör idésessionen på whiteboarden.</p>
+                        </header>
+                        <div className="glass-effect rounded-3xl p-10 mb-8 space-y-6">
+                            <h3 className="text-3xl font-bold mb-6 text-center">Workshopagenda (60 minuter)</h3>
+                            {steps.map((item) => (
+                                <article key={item.step} className="flex flex-col md:flex-row md:items-start gap-6 bg-white/5 rounded-2xl p-6 hover:bg-white/10 transition-all">
+                                    <div className="flex-shrink-0">
+                                        <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl font-black">
+                                            {item.step}
+                                        </div>
+                                    </div>
+                                    <div className="flex-1 text-left">
+                                        <h4 className="text-2xl font-bold mb-2">{item.title}</h4>
+                                        <p className="text-white/70 text-lg mb-3">{item.description}</p>
+                                        <div className="flex flex-col md:flex-row md:items-center md:gap-4 text-sm md:text-base text-white/60">
+                                            <span className="bg-purple-500/20 text-purple-200 px-3 py-1 rounded-lg font-semibold">{item.duration}</span>
+                                            <span>{item.focus}</span>
+                                        </div>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                        <div className="grid md:grid-cols-3 gap-6">
+                            <WorkshopHighlight icon="🎯" title="Målet" text="Samla konkreta AI-initiativ som stärker Nordic Operations." />
+                            <WorkshopHighlight icon="💡" title="Mod" text="Inga idéer är för små – låt alla testa nya vinklar." />
+                            <WorkshopHighlight icon="🚀" title="Uppföljning" text="Avsluta med tydliga ägare, nästa steg och hur vi mäter framsteg." />
+                        </div>
+                        <div className="mt-8 text-center">
+                            <div className="glass-effect rounded-2xl px-8 py-5 inline-flex items-center gap-4">
+                                <div className="text-3xl" aria-hidden="true">➡️</div>
+                                <p className="text-2xl font-bold">Dags att flytta till whiteboarden!</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        const WorkshopHighlight = ({ icon, title, text }) => (
+            <article className="glass-effect rounded-2xl p-6 text-center">
+                <div className="text-4xl mb-3" aria-hidden="true">{icon}</div>
+                <h4 className="text-xl font-bold mb-2">{title}</h4>
+                <p className="text-white/70">{text}</p>
+            </article>
+        );
+
+        const ParticleField = () => (
+            <div className="fixed inset-0 overflow-hidden pointer-events-none opacity-20" style={{ zIndex: 0 }}>
+                {[...Array(12)].map((_, i) => (
+                    <div
+                        key={i}
+                        className="particle absolute bg-purple-500 rounded-full"
+                        style={{
+                            width: Math.random() * 4 + 2 + 'px',
+                            height: Math.random() * 4 + 2 + 'px',
+                            left: Math.random() * 100 + '%',
+                            top: Math.random() * 100 + '%',
+                            animation: `float ${Math.random() * 10 + 10}s ease-in-out infinite`,
+                            animationDelay: Math.random() * 5 + 's'
+                        }}
+                    />
+                ))}
+            </div>
+        );
+
+        const NavigationFooter = ({ current, total, onPrev, onNext, onSelect }) => (
+            <footer className="nav-footer p-8">
+                <div className="max-w-7xl mx-auto">
+                    <div className="glass-effect rounded-full h-2 mb-6 overflow-hidden">
+                        <div
+                            className="progress-bar-fill h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                            style={{ width: `${((current + 1) / total) * 100}%` }}
+                        />
+                    </div>
+                    <div className="flex items-center justify-between gap-4 flex-wrap">
+                        <button
+                            onClick={onPrev}
+                            disabled={current === 0}
+                            className={`nav-arrow glass-effect rounded-2xl px-6 py-3 font-semibold transition-all ${
+                                current === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-white/20'
+                            }`}
+                        >
+                            ← Föregående
+                        </button>
+                        <div className="flex items-center gap-4">
+                            {slides.map((slide, index) => (
+                                <button
+                                    key={slide.id}
+                                    onClick={() => onSelect(index)}
+                                    className="nav-dot"
+                                    aria-label={`Gå till slide ${index + 1}`}
+                                >
+                                    <div
+                                        className={`transition-all ${
+                                            index === current
+                                                ? 'w-12 h-3 bg-gradient-to-r from-purple-500 to-pink-500'
+                                                : 'w-3 h-3 bg-white/30 hover:bg-white/50'
+                                        } rounded-full`}
+                                    />
+                                </button>
+                            ))}
+                        </div>
+                        <button
+                            onClick={onNext}
+                            disabled={current === total - 1}
+                            className={`nav-arrow glass-effect rounded-2xl px-6 py-3 font-semibold transition-all ${
+                                current === total - 1
+                                    ? 'opacity-30 cursor-not-allowed'
+                                    : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
+                            }`}
+                        >
+                            Nästa →
+                        </button>
+                    </div>
+                    <p className="text-center mt-4 text-white/40 text-sm">
+                        Styr med piltangenterna eller klicka för att navigera
+                    </p>
+                </div>
+            </footer>
+        );
+
+        ReactDOM.render(<PresentationApp />, document.getElementById('root'));
+    </script>
 </body>
 </html>
