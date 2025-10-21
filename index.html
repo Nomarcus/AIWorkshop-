@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Workshop Navigator</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">AI Workshop Navigator</div>
+    <nav class="main-nav" aria-label="Huvudnavigering">
+      <a href="#intro">AI på 2 minuter</a>
+      <a href="#aivbi">AI vs BI</a>
+      <a href="#upplagg">Workshopupplägg</a>
+      <a href="#spelregler">Spelregler</a>
+      <a href="#resurser">Resurser</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <h1 id="hero-title">Kickstarta era AI-workshops</h1>
+        <p>
+          Använd den här sidan som en gemensam startpunkt för att introducera AI, tydliggöra skillnaden mot BI
+          och få alla att bidra med idéer om hur vi kan förbättra våra processer och spara pengar.
+        </p>
+        <div class="cta-buttons">
+          <a class="button primary" href="#spelregler">Gå direkt till spelreglerna</a>
+          <a class="button secondary" href="#whiteboard">Förbered whiteboardövningen</a>
+        </div>
+      </div>
+      <div class="hero-card" role="presentation">
+        <h2>Workshopens mål</h2>
+        <ul>
+          <li>Skapa en gemensam förståelse för vad AI är (på riktigt).</li>
+          <li>Ringfence vad BI gör och när det räcker.</li>
+          <li>Samla konkreta AI-idéer som stärker processer och minskar kostnader.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="intro" class="section" aria-labelledby="intro-title">
+      <div class="section-header">
+        <h2 id="intro-title">AI på 2 minuter</h2>
+        <p class="section-subtitle">En ultrakort intro att presentera innan teamen sätter igång.</p>
+      </div>
+      <div class="cards-grid">
+        <article class="info-card">
+          <h3>Vad är AI?</h3>
+          <p>
+            AI är tekniker som kan uppfatta, resonera och agera med data. Det handlar om att skapa modeller som kan lära
+            sig mönster och förbättras över tid – ofta snabbare än vi människor hinner.
+          </p>
+        </article>
+        <article class="info-card">
+          <h3>Varför nu?</h3>
+          <p>
+            Kostnaden för datakraft har minskat, modeller finns förtränade och företag kan därför fokusera på verkliga
+            problem istället för att bygga allt från grunden. Det gör AI tillgängligt även för små team.
+          </p>
+        </article>
+        <article class="info-card">
+          <h3>Vad AI inte är</h3>
+          <p>
+            Det är inte magi, inte en silverkula. Utan rätt data, tydliga problem och ansvarigt användande skapar det
+            inga värden.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="aivbi" class="section section-alt" aria-labelledby="aivbi-title">
+      <div class="section-header">
+        <h2 id="aivbi-title">Skillnaden mellan AI och BI</h2>
+        <p class="section-subtitle">Förklara skillnaderna snabbt och visuellt – så att teamen har samma utgångspunkt.</p>
+      </div>
+      <div class="comparison">
+        <div class="comparison-column">
+          <h3>Business Intelligence (BI)</h3>
+          <ul>
+            <li>Fokuserar på att beskriva och visualisera vad som har hänt.</li>
+            <li>Kräver strukturerad, historisk data och tydliga KPI:er.</li>
+            <li>Ger beslutsstöd genom dashboards, rapporter och uppföljning.</li>
+            <li>Är deterministisk: samma fråga ger samma svar.</li>
+          </ul>
+        </div>
+        <div class="comparison-column">
+          <h3>Artificiell Intelligens (AI)</h3>
+          <ul>
+            <li>Förutser, optimerar eller automatiserar nästa steg.</li>
+            <li>Kan använda både strukturerad och ostrukturerad data.</li>
+            <li>Ger rekommendationer, genererar innehåll eller agerar autonomt.</li>
+            <li>Är probabilistisk: utfallet bygger på sannolikheter.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">
+        <h3>När behövs AI?</h3>
+        <p>
+          När vi vill förutse framtida utfall, hantera komplexitet eller frigöra tid genom automatisering. Om målet är att
+          förstå nuläget räcker ofta BI – men så fort vi vill påverka framtiden är AI rätt verktyg.
+        </p>
+      </div>
+    </section>
+
+    <section id="upplagg" class="section" aria-labelledby="upplagg-title">
+      <div class="section-header">
+        <h2 id="upplagg-title">Workshopupplägg</h2>
+        <p class="section-subtitle">Håll tempot uppe med tydliga block. Anpassa tiderna efter teamets behov.</p>
+      </div>
+      <div class="timeline" role="list">
+        <div class="timeline-item" role="listitem">
+          <span class="timeline-badge">1</span>
+          <div>
+            <h3>Start: 10 minuter</h3>
+            <p>Presentera AI-kortet och skillnaden mot BI. Klargör syfte och vad som förväntas av deltagarna.</p>
+          </div>
+        </div>
+        <div class="timeline-item" role="listitem">
+          <span class="timeline-badge">2</span>
+          <div>
+            <h3>Idégenerering: 20 minuter</h3>
+            <p>Deltagarna arbetar i smågrupper vid whiteboarden och skriver upp problem, möjligheter och data som behövs.</p>
+          </div>
+        </div>
+        <div class="timeline-item" role="listitem">
+          <span class="timeline-badge">3</span>
+          <div>
+            <h3>Prioritering: 15 minuter</h3>
+            <p>Grupperna klustrar idéer, väljer topp 3 och motiverar med affärsnytta samt förväntad besparing.</p>
+          </div>
+        </div>
+        <div class="timeline-item" role="listitem">
+          <span class="timeline-badge">4</span>
+          <div>
+            <h3>Återkoppling: 10 minuter</h3>
+            <p>Varje grupp pitchar sina idéer. Samla in foton eller anteckningar för uppföljning.</p>
+          </div>
+        </div>
+      </div>
+      <div class="tip-box">
+        <h3>Facilitator-tips</h3>
+        <ul>
+          <li>Använd en timer som alla kan se.</li>
+          <li>Blanda roller i grupperna: verksamhet, teknik, data, kund.</li>
+          <li>Uppmuntra deltagare att tänka på både kostnadsbesparingar och värdeskapande.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="spelregler" class="section section-alt" aria-labelledby="spelregler-title">
+      <div class="section-header">
+        <h2 id="spelregler-title">Spelregler för whiteboardövningen</h2>
+        <p class="section-subtitle">Förklara dessa tydligt innan ni går ut till whiteboarden.</p>
+      </div>
+      <div class="rules">
+        <ol id="rule-list">
+          <li>Alla idéer skrivs upp i full mening – inga kryptiska förkortningar.</li>
+          <li>Varje lapp beskriver ett problem eller en möjlighet, inte en lösning.</li>
+          <li>Fokusera på processer där tid eller pengar förloras idag.</li>
+          <li>Notera vilken data som krävs för att möjliggöra AI-lösningen.</li>
+          <li>Märk upp idéer som kräver samarbete med andra team.</li>
+          <li>Skatta snabbt potentialen: Hög, Medel eller Låg påverkan.</li>
+          <li>Fotografera whiteboarden innan ni lämnar rummet.</li>
+        </ol>
+        <button class="button primary" data-copy-target="rule-list">Kopiera spelregler</button>
+      </div>
+      <div class="checklist" aria-label="Snabbchecklista">
+        <h3>Snabbchecklista för facilitators</h3>
+        <ul>
+          <li>Testa pennor &amp; post-its.</li>
+          <li>Förbered mall för idésammanställning.</li>
+          <li>Utse en fotograf per grupp.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="whiteboard" class="section" aria-labelledby="whiteboard-title">
+      <div class="section-header">
+        <h2 id="whiteboard-title">Stöd för whiteboard-sessionen</h2>
+        <p class="section-subtitle">Ge grupperna tydliga stödfrågor för att fånga både kortsiktiga och långsiktiga idéer.</p>
+      </div>
+      <div class="accordion" role="tablist">
+        <article class="accordion-item" aria-expanded="false">
+          <button class="accordion-trigger" aria-controls="panel-problem" aria-expanded="false">
+            Problem att lösa
+          </button>
+          <div id="panel-problem" class="accordion-panel" role="region" aria-hidden="true">
+            <ul>
+              <li>Vilka moment tar längst tid i processen idag?</li>
+              <li>Var uppstår fel, dubbelarbete eller väntetider?</li>
+              <li>Vilka beslut skulle bli bättre med mer data eller analys?</li>
+            </ul>
+          </div>
+        </article>
+        <article class="accordion-item" aria-expanded="false">
+          <button class="accordion-trigger" aria-controls="panel-data" aria-expanded="false">
+            Data att samla in
+          </button>
+          <div id="panel-data" class="accordion-panel" role="region" aria-hidden="true">
+            <ul>
+              <li>Vilken data har vi redan i våra system?</li>
+              <li>Vad saknas för att träna eller använda en AI-modell?</li>
+              <li>Finns det ostrukturerad data (text, bilder, ljud) som skulle ge värde?</li>
+            </ul>
+          </div>
+        </article>
+        <article class="accordion-item" aria-expanded="false">
+          <button class="accordion-trigger" aria-controls="panel-effekt" aria-expanded="false">
+            Effekt och mått
+          </button>
+          <div id="panel-effekt" class="accordion-panel" role="region" aria-hidden="true">
+            <ul>
+              <li>Hur mycket tid eller pengar kan sparas?</li>
+              <li>Vilka risker minskar vi om vi lyckas?</li>
+              <li>Hur mäter vi framgång första, tredje och tolfte månaden?</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+      <div class="note">
+        <strong>Tips:</strong> Låt varje grupp välja en talesperson som summerar svaren på dessa frågor när ni återsamlas.
+      </div>
+    </section>
+
+    <section id="resurser" class="section section-alt" aria-labelledby="resurser-title">
+      <div class="section-header">
+        <h2 id="resurser-title">Resurser &amp; uppföljning</h2>
+        <p class="section-subtitle">Säkerställ att idéerna tas vidare efter sessionen.</p>
+      </div>
+      <div class="resource-grid">
+        <article class="resource-card">
+          <h3>Sammanställning av idéer</h3>
+          <p>Använd en delad mall i ert projektsystem (t.ex. Confluence, Notion eller Teams) där varje idé loggas med ägare och nästa steg.</p>
+        </article>
+        <article class="resource-card">
+          <h3>Fördjupningsläsning</h3>
+          <ul>
+            <li><a href="https://www.ai.se/" target="_blank" rel="noopener">AI Sweden – nationella resurser</a></li>
+            <li><a href="https://openai.com/blog" target="_blank" rel="noopener">OpenAI Blog – trender och exempel</a></li>
+            <li><a href="https://towardsdatascience.com/" target="_blank" rel="noopener">Towards Data Science – praktiska guider</a></li>
+          </ul>
+        </article>
+        <article class="resource-card">
+          <h3>Fortsatt arbete</h3>
+          <p>Utse en liten arbetsgrupp som prioriterar idéerna, uppskattar ROI och tar fram en experimentplan med tydliga milstolpar.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Skapad för att hjälpa team tänka smartare om AI. Justera fritt för varje workshop.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
