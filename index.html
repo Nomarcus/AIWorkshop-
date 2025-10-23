@@ -126,6 +126,7 @@
         const slides = [
             { id: 0, title: 'Vad är AI?', type: 'definition' },
             { id: 1, title: 'AI vs BI', type: 'comparison' },
+            { id: 2, title: 'Workshop: Vad kan vi lösa med AI?', type: 'workshop' }
             { id: 2, title: 'Spelregler', type: 'rules' },
             { id: 3, title: 'Workshop: Vad kan vi lösa med AI?', type: 'workshop' }
         ];
@@ -189,6 +190,7 @@
                         onPrev={prevSlide}
                         onNext={nextSlide}
                         onSelect={goToSlide}
+                        slides={slides}
                     />
                 </div>
             );
@@ -346,6 +348,10 @@
                 {
                     step: '1',
                     title: 'Individuell idégenerering',
+                    description: 'Skriv ner så många problem, flaskhalsar och möjligheter du ser i vardagen.',
+                    duration: '10 min',
+                    focus: 'Fokus: Vart läcker tid eller pengar idag?',
+                    badgeGradient: 'from-blue-500 to-cyan-500'
                     description: 'Skriv ner så många problem eller möjligheter du kan se i vardagen.',
                     duration: '10 min',
                     focus: 'Fokus: Vart läcker tid eller pengar idag?'
@@ -353,6 +359,10 @@
                 {
                     step: '2',
                     title: 'Smågruppsdiskussion',
+                    description: 'Grupper om 3–4 personer prioriterar idéerna och beskriver varför just de gör skillnad.',
+                    duration: '15 min',
+                    focus: 'Fokus: Effekt, kostnadsbesparing, kundupplevelse.',
+                    badgeGradient: 'from-purple-500 to-pink-500'
                     description: 'Grupper om 3–4 personer väljer ut toppidéerna och kartlägger varför just de gör skillnad.',
                     duration: '15 min',
                     focus: 'Fokus: Effekt, kostnadsbesparing, kundupplevelse.'
@@ -360,6 +370,10 @@
                 {
                     step: '3',
                     title: 'Gemensam sortering',
+                    description: 'Placera lapparna på whiteboarden under kategorierna Kund, Effektivitet, Innovation eller Risk.',
+                    duration: '20 min',
+                    focus: 'Fokus: Var ser vi snabbast värde?',
+                    badgeGradient: 'from-green-500 to-emerald-500'
                     description: 'Placera idéerna på whiteboarden under kategorier: Kund, Effektivitet, Innovation, Risk.',
                     duration: '20 min',
                     focus: 'Fokus: Var ser vi snabbast värde?'
@@ -367,6 +381,33 @@
                 {
                     step: '4',
                     title: 'Prioritering & nästa steg',
+                    description: 'Rösta med tre prickar var, bestäm ansvarig och dokumentera vilket resultat vi ska mäta.',
+                    duration: '15 min',
+                    focus: 'Fokus: Top 3 initiativ att utforska vidare.',
+                    badgeGradient: 'from-orange-500 to-red-500'
+                }
+            ];
+
+            const rules = [
+                {
+                    icon: '🙋‍♀️',
+                    title: 'Alla röster räknas',
+                    text: 'Skriv ner varje idé innan den diskuteras så att både operativa och strategiska perspektiv kommer med.'
+                },
+                {
+                    icon: '⏱️',
+                    title: 'Tempo före perfektion',
+                    text: 'Snabba inspel – 1 minut per talare vid delningar. Vi förbättrar idéerna tillsammans senare.'
+                },
+                {
+                    icon: '🎯',
+                    title: 'Problem före lösning',
+                    text: 'Beskriv vilket problem vi löser och vem som påverkas innan vi pratar teknik eller verktyg.'
+                },
+                {
+                    icon: '🛡️',
+                    title: 'Ansvar & etik',
+                    text: 'Säkerställ att förslagen hanterar data säkert och tar hänsyn till människor, kvalitet och regler.'
                     description: 'Röstning med tre klisterpunkter var. Dokumentera ansvarig, tidslinje och mätetal.',
                     duration: '15 min',
                     focus: 'Fokus: Top 3 initiativ att undersöka vidare.'
@@ -379,11 +420,26 @@
                         <header className="text-center mb-12">
                             <div className="text-7xl mb-6 icon-float" aria-hidden="true">🧭</div>
                             <h2 className="text-5xl md:text-6xl font-black mb-6 leading-tight">
+                                Workshop: Vad kan vi lösa
                                 Vad kan vi lösa
                                 <span className="block bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
                                     med AI?
                                 </span>
                             </h2>
+                            <p className="text-2xl text-white/70">
+                                Efter introduktionen flyttar vi till whiteboarden och följer processen nedan.
+                            </p>
+                        </header>
+
+                        <div className="glass-effect rounded-3xl p-10 mb-8 space-y-6">
+                            <h3 className="text-3xl font-bold text-center">Workshopagenda (60 minuter)</h3>
+                            <p className="text-white/60 text-lg text-center">
+                                Följ varje steg och dokumentera insikterna löpande så att inget går förlorat.
+                            </p>
+                            {steps.map((item) => (
+                                <article key={item.step} className="flex flex-col md:flex-row md:items-start gap-6 bg-white/5 rounded-2xl p-6 hover:bg-white/10 transition-all">
+                                    <div className="flex-shrink-0">
+                                        <div className={`w-16 h-16 bg-gradient-to-r ${item.badgeGradient} rounded-2xl flex items-center justify-center text-2xl font-black`}>
                             <p className="text-2xl text-white/70">Följ agendan och kör idésessionen på whiteboarden.</p>
                         </header>
                         <div className="glass-effect rounded-3xl p-10 mb-8 space-y-6">
@@ -399,6 +455,7 @@
                                         <h4 className="text-2xl font-bold mb-2">{item.title}</h4>
                                         <p className="text-white/70 text-lg mb-3">{item.description}</p>
                                         <div className="flex flex-col md:flex-row md:items-center md:gap-4 text-sm md:text-base text-white/60">
+                                            <span className="bg-white/10 text-white px-3 py-1 rounded-lg font-semibold">{item.duration}</span>
                                             <span className="bg-purple-500/20 text-purple-200 px-3 py-1 rounded-lg font-semibold">{item.duration}</span>
                                             <span>{item.focus}</span>
                                         </div>
@@ -406,11 +463,30 @@
                                 </article>
                             ))}
                         </div>
+
                         <div className="grid md:grid-cols-3 gap-6">
                             <WorkshopHighlight icon="🎯" title="Målet" text="Samla konkreta AI-initiativ som stärker Nordic Operations." />
                             <WorkshopHighlight icon="💡" title="Mod" text="Inga idéer är för små – låt alla testa nya vinklar." />
                             <WorkshopHighlight icon="🚀" title="Uppföljning" text="Avsluta med tydliga ägare, nästa steg och hur vi mäter framsteg." />
                         </div>
+
+                        <div className="mt-10">
+                            <h3 className="text-3xl font-bold text-center mb-6">Spelregler innan vi startar</h3>
+                            <div className="grid md:grid-cols-2 gap-6">
+                                {rules.map((rule) => (
+                                    <article key={rule.title} className="glass-effect rounded-3xl p-8 hover:bg-white/10 transition-all">
+                                        <div className="text-4xl mb-3" aria-hidden="true">{rule.icon}</div>
+                                        <h4 className="text-2xl font-bold mb-2">{rule.title}</h4>
+                                        <p className="text-white/70 text-lg">{rule.text}</p>
+                                    </article>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="mt-10 text-center">
+                            <div className="glass-effect rounded-2xl px-8 py-5 inline-flex items-center gap-4">
+                                <div className="text-3xl" aria-hidden="true">➡️</div>
+                                <p className="text-2xl font-bold">Redo? Flytta till whiteboarden och sätt idéerna i spel!</p>
                         <div className="mt-8 text-center">
                             <div className="glass-effect rounded-2xl px-8 py-5 inline-flex items-center gap-4">
                                 <div className="text-3xl" aria-hidden="true">➡️</div>
@@ -449,6 +525,7 @@
             </div>
         );
 
+        const NavigationFooter = ({ current, total, onPrev, onNext, onSelect, slides }) => (
         const NavigationFooter = ({ current, total, onPrev, onNext, onSelect }) => (
             <footer className="nav-footer p-8">
                 <div className="max-w-7xl mx-auto">
